@@ -1,3 +1,18 @@
+input.onGesture(Gesture.LogoUp, function () {
+    if (頁面 == 1) {
+        radio.sendNumber(1)
+    }
+})
+input.onGesture(Gesture.TiltLeft, function () {
+    if (頁面 == 1) {
+        radio.sendNumber(3)
+    }
+})
+input.onButtonPressed(Button.A, function () {
+    if (頁面 == 2) {
+        radio.sendNumber(7)
+    }
+})
 function 循線 () {
     // 白線上
     // 停下來
@@ -36,6 +51,16 @@ function 循線 () {
         bitbot.go(BBDirection.Forward, 60)
     }
 }
+input.onGesture(Gesture.Shake, function () {
+    if (頁面 == 2) {
+        radio.sendNumber(6)
+    }
+})
+input.onGesture(Gesture.ScreenUp, function () {
+    if (頁面 == 1) {
+        radio.sendNumber(5)
+    }
+})
 function 距離循線 () {
     // 黑線上
     if (bitbot.sonar(BBPingUnit.Centimeters) <= 10) {
@@ -44,8 +69,13 @@ function 距離循線 () {
         循線()
     }
 }
+input.onGesture(Gesture.LogoDown, function () {
+    if (頁面 == 1) {
+        radio.sendNumber(2)
+    }
+})
 input.onButtonPressed(Button.AB, function () {
-    if (頁面 < 5) {
+    if (頁面 < 2) {
         頁面 += 1
         basic.showNumber(頁面)
     } else {
@@ -53,11 +83,22 @@ input.onButtonPressed(Button.AB, function () {
         basic.showNumber(頁面)
     }
 })
+input.onButtonPressed(Button.B, function () {
+    if (頁面 == 2) {
+        radio.sendNumber(8)
+    }
+})
+input.onGesture(Gesture.TiltRight, function () {
+    if (頁面 == 1) {
+        radio.sendNumber(4)
+    }
+})
 let 結束時間 = 0
 let 開始時間 = 0
 let 頁面 = 0
+radio.setGroup(3)
 頁面 = 1
 basic.showNumber(頁面)
 basic.forever(function () {
-    距離循線()
+	
 })
