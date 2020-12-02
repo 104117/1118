@@ -1,71 +1,19 @@
 input.onGesture(Gesture.LogoUp, function () {
-    if (頁面 == 1) {
-        radio.sendNumber(1)
-    }
+	
 })
 radio.onReceivedNumber(function (receivedNumber) {
     if (receivedNumber == 1) {
-        bitbot.go(BBDirection.Reverse, 60)
+        狀態 = 1
     }
     if (receivedNumber == 2) {
-        bitbot.go(BBDirection.Forward, 60)
-    }
-    if (receivedNumber == 3) {
-        bitbot.rotate(BBRobotDirection.Left, 60)
-    }
-    if (receivedNumber == 4) {
-        bitbot.rotate(BBRobotDirection.Right, 60)
-    }
-    if (receivedNumber == 5) {
-        bitbot.stop(BBStopMode.Brake)
-    }
-    if (0 == 6) {
-        bitbot.buzz(true)
-        basic.pause(100)
-        bitbot.buzz(false)
-        basic.pause(100)
-        bitbot.buzz(true)
-        basic.pause(100)
-        bitbot.buzz(false)
-        basic.pause(100)
-        bitbot.buzz(true)
-        basic.pause(100)
-        bitbot.buzz(false)
-        basic.pause(100)
-        bitbot.buzz(true)
-        basic.pause(100)
-        bitbot.buzz(false)
-        basic.pause(100)
-        bitbot.buzz(true)
-        basic.pause(100)
-        bitbot.buzz(false)
-        basic.pause(100)
-        bitbot.buzz(true)
-        basic.pause(100)
-        bitbot.buzz(false)
-        basic.pause(100)
-    }
-    if (receivedNumber == 7) {
-        距離循線()
-    }
-    if (receivedNumber == 8) {
-        距離 = bitbot.sonar(BBPingUnit.Centimeters)
-        basic.showNumber(bitbot.sonar(BBPingUnit.Centimeters))
-        radio.sendValue("a", 距離)
-    }
-    if (receivedNumber == 9) {
-        bitbot.stop(BBStopMode.Brake)
+        狀態 = 2
     }
 })
 input.onGesture(Gesture.TiltLeft, function () {
-    if (頁面 == 1) {
-        radio.sendNumber(3)
-    }
+	
 })
 input.onButtonPressed(Button.A, function () {
-    if (頁面 == 2) {
-        radio.sendNumber(7)
-    }
+    radio.sendNumber(1)
 })
 function 循線 () {
     // 白線上
@@ -98,25 +46,18 @@ function 循線 () {
     }
     // 左邊
     if (bitbot.readLine(BBLineSensor.Left) == 0 && bitbot.readLine(BBLineSensor.Right) == 1) {
-        bitbot.rotate(BBRobotDirection.Right, 115)
+        bitbot.rotate(BBRobotDirection.Right, 15)
     }
     // 黑線上
     if (bitbot.readLine(BBLineSensor.Left) == 1 && bitbot.readLine(BBLineSensor.Right) == 1) {
-        bitbot.go(BBDirection.Forward, 60)
+        bitbot.go(BBDirection.Forward, 100)
     }
 }
 input.onGesture(Gesture.Shake, function () {
-    if (頁面 == 2) {
-        radio.sendNumber(6)
-    }
+	
 })
 input.onGesture(Gesture.ScreenUp, function () {
-    if (頁面 == 1) {
-        radio.sendNumber(5)
-    }
-    if (頁面 == 2) {
-        radio.sendNumber(9)
-    }
+	
 })
 function 距離循線 () {
     while (bitbot.sonar(BBPingUnit.Centimeters) > 10) {
@@ -125,28 +66,19 @@ function 距離循線 () {
     bitbot.stop(BBStopMode.Brake)
 }
 input.onGesture(Gesture.LogoDown, function () {
-    if (頁面 == 1) {
-        radio.sendNumber(2)
-    }
+	
 })
 input.onButtonPressed(Button.AB, function () {
-    if (頁面 < 2) {
-        頁面 += 1
-        basic.showNumber(頁面)
-    } else {
-        頁面 = 1
-        basic.showNumber(頁面)
-    }
+	
+})
+radio.onReceivedString(function (receivedString) {
+	
 })
 input.onButtonPressed(Button.B, function () {
-    if (頁面 == 2) {
-        radio.sendNumber(8)
-    }
+    radio.sendNumber(2)
 })
 input.onGesture(Gesture.TiltRight, function () {
-    if (頁面 == 1) {
-        radio.sendNumber(4)
-    }
+	
 })
 radio.onReceivedValue(function (name, value) {
     if ("a" == name) {
@@ -155,11 +87,14 @@ radio.onReceivedValue(function (name, value) {
 })
 let 結束時間 = 0
 let 開始時間 = 0
-let 距離 = 0
-let 頁面 = 0
+let 狀態 = 0
 radio.setGroup(3)
-頁面 = 1
+let 頁面 = 1
 basic.showNumber(頁面)
+狀態 = 2
 basic.forever(function () {
-	
+    while (狀態 == 1) {
+        循線()
+    }
+    bitbot.stop(BBStopMode.Brake)
 })
